@@ -1,3 +1,16 @@
+<script>
+import WorkbenchUpgrade from './components/workbench-upgrade.vue';
+
+export default {
+  components: {
+    WorkbenchUpgrade
+  }
+};
+</script>
+
 <template>
-  <h1>Vue Jobs</h1>
+  <div>
+    <workbench-upgrade />
+  </div>
+  
 </template>

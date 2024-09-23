@@ -46,7 +46,7 @@ const methods = {
 
 <template>
     <div class="workbench-upgrade">
-        <!-- Your template content goes here -->
+        <a>workbench-upgrade</a>
     </div>
 </template>
 
