@@ -46,7 +46,10 @@ const data = ref({
             },
             showItems: false,
         }
-    ]
+    ],
+
+    craftingList: []
+
 });
 
 
@@ -55,6 +58,23 @@ const toggleItems = (location) => {
     location.showItems = !location.showItems; // Toggle showItems on click
     console.log(location.showItems);
 };
+
+const addOrRemoveItemToCraftingList = (item) => {
+    const index = data.value.craftingList.findIndex(currentItem => currentItem.name === item.name);
+    if (index !== -1) {
+        // Item exists, remove it
+        data.value.craftingList.splice(index, 1);
+        console.log(`Removed ${item.name} from Crafting List:`, data.value.craftingList);
+    } else {
+        // Item does not exist, add it
+        data.value.craftingList.push({...item});
+        console.log(`Added ${item.name} to Crafting List:`, data.value.craftingList);
+    }
+}
+
+const isItemInCraftingList = (item) => {
+    return data.value.craftingList.some(craftItem => craftItem.name === item.name);
+}
 
 </script>
 
@@ -67,7 +87,10 @@ const toggleItems = (location) => {
                 <h3>{{ location.name }} <button @click="toggleItems(location)">+</button></h3>
                 <ul v-if="location.showItems">
                     <li v-for="item in location.items" :key="item.name">
-                        {{ item.name }}
+                        {{ item.name }} 
+                        <button @click="addOrRemoveItemToCraftingList(item)">
+                            {{ isItemInCraftingList(item) ? 'Remove' : 'Add' }} 
+                        </button>
                     </li>
 
                 </ul>
