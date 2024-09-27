@@ -67,13 +67,17 @@ const addOrRemoveItemToCraftingList = (item) => {
         console.log(`Removed ${item.name} from Crafting List:`, data.value.craftingList);
     } else {
         // Item does not exist, add it
-        data.value.craftingList.push({...item});
+        data.value.craftingList.push({ ...item });
         console.log(`Added ${item.name} to Crafting List:`, data.value.craftingList);
     }
 }
 
 const isItemInCraftingList = (item) => {
     return data.value.craftingList.some(craftItem => craftItem.name === item.name);
+}
+
+const getResourceList = (item) => {
+    return Object.entries(item).filter(([key, value]) => key !== 'name').map(([key, value]) => `${key}: ${value}`);
 }
 
 </script>
@@ -87,10 +91,15 @@ const isItemInCraftingList = (item) => {
                 <h3>{{ location.name }} <button @click="toggleItems(location)">+</button></h3>
                 <ul v-if="location.showItems">
                     <li v-for="item in location.items" :key="item.name">
-                        {{ item.name }} 
+                        {{ item.name }}
                         <button @click="addOrRemoveItemToCraftingList(item)">
-                            {{ isItemInCraftingList(item) ? 'Remove' : 'Add' }} 
+                            {{ isItemInCraftingList(item) ? 'Remove' : 'Add' }}
                         </button>
+                        <ul v-if="isItemInCraftingList(item)">
+                            <li v-for="resource in getResourceList(item)" :key="resource">
+                                {{ resource }}
+                            </li>
+                        </ul>
                     </li>
 
                 </ul>
